@@ -4,7 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"play-to-win-api/internal/constants"
 	"play-to-win-api/internal/domain"
+	"strings"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -33,7 +35,7 @@ func (uc *categoryUseCase) GetByID(ctx context.Context, id string) (*domain.Cate
 		if errors.Is(err, domain.ErrCategoryNotFound) {
 			return nil, err
 		}
-		return nil, fmt.Errorf("failed to get category: %w", err)
+		return nil, fmt.Errorf(strings.ToLower(constants.CategoryNotFoundError))
 	}
 	return category, nil
 }
