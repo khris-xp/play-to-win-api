@@ -5,16 +5,24 @@ import (
 	"log"
 	"play-to-win-api/internal/config"
 	"play-to-win-api/internal/delivery/http/handler"
+	"play-to-win-api/internal/delivery/http/middleware"
 	route "play-to-win-api/internal/delivery/http/routes"
 	"play-to-win-api/internal/repository/mongodb"
 	"play-to-win-api/internal/usecase"
 	mongoClient "play-to-win-api/pkg/mongodb"
+	"play-to-win-api/pkg/validator"
+	"time"
 
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
+
 	cfg := config.LoadConfig()
+
+	if cfg.JWT.AccessSecret == "" || cfg.JWT.RefreshSecret == "" {
+		log.Fatal("JWT secrets must be configured")
+	}
 
 	db, err := mongoClient.NewClient(
 		context.Background(),
@@ -26,12 +34,28 @@ func main() {
 	}
 
 	categoryRepo := mongodb.NewCategoryRepository(db)
+	userRepo := mongodb.NewUserRepository(db)
 
 	categoryUseCase := usecase.NewCategoryUseCase(categoryRepo)
+	authUseCase := usecase.NewAuthUseCase(
+		userRepo,
+		cfg.JWT.AccessSecret,
+		cfg.JWT.RefreshSecret,
+		24*time.Hour,
+		7*24*time.Hour,
+	)
 
 	e := echo.New()
 
-	handlers := handler.NewHandlers(e, categoryUseCase)
+	v := validator.NewValidator()
+
+	authMiddleware := middleware.NewAuthMiddleware(cfg.JWT.AccessSecret)
+
+	handlers := &handler.Handlers{
+		Category: handler.NewCategoryHandler(categoryUseCase),
+		Auth:     handler.NewAuthHandler(authUseCase, v),
+		AuthMW:   authMiddleware,
+	}
 
 	route.SetupRoutes(e, handlers)
 

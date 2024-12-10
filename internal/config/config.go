@@ -27,8 +27,10 @@ type MongoDBConfig struct {
 }
 
 type JWTConfig struct {
-	Secret    string
-	ExpiresIn time.Duration
+	AccessSecret     string
+	RefreshSecret    string
+	AccessExpiresIn  time.Duration
+	RefreshExpiresIn time.Duration
 }
 
 func LoadConfig() *Config {
@@ -48,8 +50,10 @@ func LoadConfig() *Config {
 			Timeout:  time.Second * 10,
 		},
 		JWT: JWTConfig{
-			Secret:    getEnv("JWT_SECRET", "your-secret-key"),
-			ExpiresIn: time.Hour * 24,
+			AccessSecret:     getEnv("ACCESS_SECRET", "access_secret"),
+			RefreshSecret:    getEnv("REFRESH_SECRET", "refresh_secret"),
+			AccessExpiresIn:  time.Hour * 24,
+			RefreshExpiresIn: time.Hour * 24 * 7,
 		},
 	}
 }

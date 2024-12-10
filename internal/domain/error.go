@@ -12,4 +12,12 @@ var (
 	ErrCategoryNotFound      = errors.New("category not found")
 	ErrCategoryAlreadyExists = errors.New("category already exists")
 	ErrInvalidCategoryID     = errors.New("invalid category ID")
+
+	ErrUserNotFound      = errors.New("user not found")
+	ErrUserAlreadyExists = errors.New("user already exists")
+	ErrInvalidUserID     = errors.New("invalid user ID")
+	ErrInvalidUserData   = errors.New("invalid user data")
+
+	ErrInvalidToken       = errors.New("invalid token")
+	ErrInvalidCredentials = errors.New("invalid credentials")
 )

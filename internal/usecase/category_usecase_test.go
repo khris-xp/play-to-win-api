@@ -10,7 +10,6 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// MockCategoryRepository is a mock implementation of CategoryRepository for testing.
 type MockCategoryRepository struct {
 	mock.Mock
 }

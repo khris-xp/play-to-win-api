@@ -13,9 +13,25 @@ func SetupRoutes(e *echo.Echo, handlers *handler.Handlers) {
 	v1 := e.Group("/api/v1")
 
 	categories := v1.Group("/categories")
-	categories.POST("", handlers.Category.Create)
 	categories.GET("", handlers.Category.GetAll)
 	categories.GET("/:id", handlers.Category.GetByID)
-	categories.PUT("/:id", handlers.Category.Update)
-	categories.DELETE("/:id", handlers.Category.Delete)
+
+	protectedCategories := categories.Group("")
+	protectedCategories.Use(handlers.AuthMW.Authenticate)
+
+	adminCategories := protectedCategories.Group("")
+	adminCategories.Use(middleware.RequireRole("admin"))
+	adminCategories.POST("", handlers.Category.Create)
+	adminCategories.PUT("/:id", handlers.Category.Update)
+	adminCategories.DELETE("/:id", handlers.Category.Delete)
+
+	auth := v1.Group("/auth")
+	auth.POST("/register", handlers.Auth.Register)
+	auth.POST("/login", handlers.Auth.Login)
+	auth.POST("/refresh", handlers.Auth.RefreshToken)
+
+	user := v1.Group("/user")
+	user.Use(handlers.AuthMW.Authenticate)
+	user.GET("/profile", handlers.Auth.GetProfile)
+
 }
