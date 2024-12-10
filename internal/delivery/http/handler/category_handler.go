@@ -66,6 +66,7 @@ func (h *CategoryHandler) Update(c echo.Context) error {
 	if err != nil {
 		return response.ErrorResponse(c, http.StatusBadRequest, constants.CategoryInvalidDataError)
 	}
+
 	category.ID = objectID
 	if err := h.categoryUseCase.Update(c.Request().Context(), &category); err != nil {
 		return response.ErrorResponse(c, http.StatusInternalServerError, err.Error())

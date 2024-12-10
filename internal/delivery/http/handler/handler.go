@@ -13,13 +13,15 @@ type Handlers struct {
 	Category CategoryHandler
 	Auth     AuthHandler
 	AuthMW   *middleware.AuthMiddleware
+	Product  ProductHandler
 }
 
-func NewHandlers(e *echo.Echo, categoryUseCase domain.CategoryUseCase, authUseCase domain.AuthUseCase) *Handlers {
+func NewHandlers(e *echo.Echo, categoryUseCase domain.CategoryUseCase, authUseCase domain.AuthUseCase, productUseCase domain.ProductUseCase) *Handlers {
 	validator := validator.NewValidator()
 	return &Handlers{
 		Category: NewCategoryHandler(categoryUseCase),
 		Auth:     NewAuthHandler(authUseCase, validator),
+		Product:  NewProductHandler(productUseCase),
 	}
 }
 

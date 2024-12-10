@@ -34,4 +34,16 @@ func SetupRoutes(e *echo.Echo, handlers *handler.Handlers) {
 	user.Use(handlers.AuthMW.Authenticate)
 	user.GET("/profile", handlers.Auth.GetProfile)
 
+	products := v1.Group("/products")
+	products.GET("", handlers.Product.GetAll)
+	products.GET("/:id", handlers.Product.GetByID)
+
+	protectedProducts := products.Group("")
+	protectedProducts.Use(handlers.AuthMW.Authenticate)
+
+	adminProducts := protectedProducts.Group("")
+	adminProducts.Use(middleware.RequireRole("admin"))
+	adminProducts.POST("", handlers.Product.Create)
+	adminProducts.PUT("/:id", handlers.Product.Update)
+	adminProducts.DELETE("/:id", handlers.Product.Delete)
 }

@@ -35,6 +35,7 @@ func main() {
 
 	categoryRepo := mongodb.NewCategoryRepository(db)
 	userRepo := mongodb.NewUserRepository(db)
+	productRepo := mongodb.NewProductRepository(db)
 
 	categoryUseCase := usecase.NewCategoryUseCase(categoryRepo)
 	authUseCase := usecase.NewAuthUseCase(
@@ -44,6 +45,7 @@ func main() {
 		24*time.Hour,
 		7*24*time.Hour,
 	)
+	productUseCase := usecase.NewProductUseCase(productRepo)
 
 	e := echo.New()
 
@@ -55,6 +57,7 @@ func main() {
 		Category: handler.NewCategoryHandler(categoryUseCase),
 		Auth:     handler.NewAuthHandler(authUseCase, v),
 		AuthMW:   authMiddleware,
+		Product:  handler.NewProductHandler(productUseCase),
 	}
 
 	route.SetupRoutes(e, handlers)
