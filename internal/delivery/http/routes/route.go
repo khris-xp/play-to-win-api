@@ -46,4 +46,17 @@ func SetupRoutes(e *echo.Echo, handlers *handler.Handlers) {
 	adminProducts.POST("", handlers.Product.Create)
 	adminProducts.PUT("/:id", handlers.Product.Update)
 	adminProducts.DELETE("/:id", handlers.Product.Delete)
+
+	campaigns := v1.Group("/campaigns")
+	campaigns.GET("", handlers.Campaign.GetAll)
+	campaigns.GET("/:id", handlers.Campaign.GetByID)
+
+	protectedCampaigns := campaigns.Group("")
+	protectedCampaigns.Use(handlers.AuthMW.Authenticate)
+
+	adminCampaigns := protectedCampaigns.Group("")
+	adminCampaigns.Use(middleware.RequireRole("admin"))
+	adminCampaigns.POST("", handlers.Campaign.Create)
+	adminCampaigns.PUT("/:id", handlers.Campaign.Update)
+	adminCampaigns.DELETE("/:id", handlers.Campaign.Delete)
 }

@@ -10,10 +10,11 @@ import (
 )
 
 type Handlers struct {
-	Category CategoryHandler
-	Auth     AuthHandler
-	AuthMW   *middleware.AuthMiddleware
-	Product  ProductHandler
+	Category  CategoryHandler
+	Auth      AuthHandler
+	AuthMW    *middleware.AuthMiddleware
+	Product   ProductHandler
+	Campaign CampaignHandler
 }
 
 func NewHandlers(e *echo.Echo, categoryUseCase domain.CategoryUseCase, authUseCase domain.AuthUseCase, productUseCase domain.ProductUseCase) *Handlers {

@@ -25,4 +25,9 @@ var (
 	ErrProductAlreadyExists = errors.New("product already exists")
 	ErrInvalidProductID     = errors.New("invalid product ID")
 	ErrInvalidProductData   = errors.New("invalid product data")
+
+	ErrCampaignNotFound      = errors.New("campaign not found")
+	ErrCampaignAlreadyExists = errors.New("campaign already exists")
+	ErrInvalidCampaignID     = errors.New("invalid campaign ID")
+	ErrInvalidCampaignData   = errors.New("invalid campaign data")
 )
