@@ -39,7 +39,6 @@ func (r *cartRepository) FindByUserID(ctx context.Context, userID string) ([]dom
 		return nil, domain.ErrInvalidCartID
 	}
 
-	// Pipeline for aggregating cart with user data
 	pipeline := []bson.M{
 		{
 			"$match": bson.M{

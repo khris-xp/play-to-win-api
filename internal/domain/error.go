@@ -33,4 +33,7 @@ var (
 
 	ErrCartNotFound  = errors.New("cart not found")
 	ErrInvalidCartID = errors.New("invalid cart ID")
+
+	ErrCartItemNotFound  = errors.New("cart item not found")
+	ErrInvalidCartItemID = errors.New("invalid cart item ID")
 )

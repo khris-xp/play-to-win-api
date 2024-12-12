@@ -16,9 +16,10 @@ type Handlers struct {
 	Product  ProductHandler
 	Campaign CampaignHandler
 	Cart     CartHandler
+	CartItem CartItemHandler
 }
 
-func NewHandlers(e *echo.Echo, categoryUseCase domain.CategoryUseCase, authUseCase domain.AuthUseCase, productUseCase domain.ProductUseCase, campaignUseCase domain.CampaignUseCase, cartUseCase domain.CartUseCase) *Handlers {
+func NewHandlers(e *echo.Echo, categoryUseCase domain.CategoryUseCase, authUseCase domain.AuthUseCase, productUseCase domain.ProductUseCase, campaignUseCase domain.CampaignUseCase, cartUseCase domain.CartUseCase, cartItemUseCase domain.CartItemUseCase) *Handlers {
 	validator := validator.NewValidator()
 	return &Handlers{
 		Category: NewCategoryHandler(categoryUseCase),
@@ -26,6 +27,7 @@ func NewHandlers(e *echo.Echo, categoryUseCase domain.CategoryUseCase, authUseCa
 		Product:  NewProductHandler(productUseCase),
 		Campaign: NewCampaignHandler(campaignUseCase),
 		Cart:     NewCartHandler(cartUseCase, authUseCase),
+		CartItem: NewCartItemHandler(cartItemUseCase),
 	}
 }
 

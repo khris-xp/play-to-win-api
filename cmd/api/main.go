@@ -38,6 +38,7 @@ func main() {
 	productRepo := mongodb.NewProductRepository(db)
 	campaignRepo := mongodb.NewCampaignRepository(db)
 	cartRepo := mongodb.NewCartRepository(db)
+	cartItemRepo := mongodb.NewCartItemRepository(db)
 
 	categoryUseCase := usecase.NewCategoryUseCase(categoryRepo)
 	authUseCase := usecase.NewAuthUseCase(
@@ -50,6 +51,7 @@ func main() {
 	productUseCase := usecase.NewProductUseCase(productRepo)
 	campaignUseCase := usecase.NewCampaignUseCase(campaignRepo)
 	cartUseCase := usecase.NewCartUseCase(cartRepo)
+	cartItemUseCase := usecase.NewCartItemUseCase(cartItemRepo)
 
 	e := echo.New()
 
@@ -64,6 +66,7 @@ func main() {
 		Product:  handler.NewProductHandler(productUseCase),
 		Campaign: handler.NewCampaignHandler(campaignUseCase),
 		Cart:     handler.NewCartHandler(cartUseCase, authUseCase),
+		CartItem: handler.NewCartItemHandler(cartItemUseCase),
 	}
 
 	route.SetupRoutes(e, handlers)
