@@ -10,19 +10,22 @@ import (
 )
 
 type Handlers struct {
-	Category  CategoryHandler
-	Auth      AuthHandler
-	AuthMW    *middleware.AuthMiddleware
-	Product   ProductHandler
+	Category CategoryHandler
+	Auth     AuthHandler
+	AuthMW   *middleware.AuthMiddleware
+	Product  ProductHandler
 	Campaign CampaignHandler
+	Cart     CartHandler
 }
 
-func NewHandlers(e *echo.Echo, categoryUseCase domain.CategoryUseCase, authUseCase domain.AuthUseCase, productUseCase domain.ProductUseCase) *Handlers {
+func NewHandlers(e *echo.Echo, categoryUseCase domain.CategoryUseCase, authUseCase domain.AuthUseCase, productUseCase domain.ProductUseCase, campaignUseCase domain.CampaignUseCase, cartUseCase domain.CartUseCase) *Handlers {
 	validator := validator.NewValidator()
 	return &Handlers{
 		Category: NewCategoryHandler(categoryUseCase),
 		Auth:     NewAuthHandler(authUseCase, validator),
 		Product:  NewProductHandler(productUseCase),
+		Campaign: NewCampaignHandler(campaignUseCase),
+		Cart:     NewCartHandler(cartUseCase, authUseCase),
 	}
 }
 

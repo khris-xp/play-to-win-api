@@ -30,4 +30,7 @@ var (
 	ErrCampaignAlreadyExists = errors.New("campaign already exists")
 	ErrInvalidCampaignID     = errors.New("invalid campaign ID")
 	ErrInvalidCampaignData   = errors.New("invalid campaign data")
+
+	ErrCartNotFound  = errors.New("cart not found")
+	ErrInvalidCartID = errors.New("invalid cart ID")
 )

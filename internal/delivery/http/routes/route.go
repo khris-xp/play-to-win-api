@@ -59,4 +59,16 @@ func SetupRoutes(e *echo.Echo, handlers *handler.Handlers) {
 	adminCampaigns.POST("", handlers.Campaign.Create)
 	adminCampaigns.PUT("/:id", handlers.Campaign.Update)
 	adminCampaigns.DELETE("/:id", handlers.Campaign.Delete)
+
+	carts := v1.Group("/carts")
+
+	protectedCart := carts.Group("")
+	protectedCart.Use(handlers.AuthMW.Authenticate)
+
+	protectedCart.GET("", handlers.Cart.GetByUserID)
+	protectedCart.GET("/:id", handlers.Cart.GetByID)
+	protectedCart.POST("", handlers.Cart.Create)
+	protectedCart.PUT("/:id", handlers.Cart.Update)
+	protectedCart.DELETE("/:id", handlers.Cart.Delete)
+
 }
