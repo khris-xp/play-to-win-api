@@ -69,7 +69,7 @@ func (r *cartItemRepository) FindByCartID(ctx context.Context, cartID string) ([
 		},
 		{
 			"$project": bson.M{
-				"product": 0, // Remove the nested product object
+				"product": 0,
 			},
 		},
 	}

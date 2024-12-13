@@ -17,6 +17,7 @@ type Handlers struct {
 	Campaign CampaignHandler
 	Cart     CartHandler
 	CartItem CartItemHandler
+	DiscountRule DiscountRuleHandler
 }
 
 func NewHandlers(e *echo.Echo, categoryUseCase domain.CategoryUseCase, authUseCase domain.AuthUseCase, productUseCase domain.ProductUseCase, campaignUseCase domain.CampaignUseCase, cartUseCase domain.CartUseCase, cartItemUseCase domain.CartItemUseCase) *Handlers {

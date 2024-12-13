@@ -84,4 +84,17 @@ func SetupRoutes(e *echo.Echo, handlers *handler.Handlers) {
 	adminCartItems := protectedCartItems.Group("")
 	adminCartItems.Use(middleware.RequireRole("admin"))
 	adminCartItems.GET("", handlers.CartItem.GetAll)
+
+	discountRule := v1.Group("/discount-rules")
+	discountRule.GET("", handlers.DiscountRule.GetAll)
+	discountRule.GET("/:id", handlers.DiscountRule.GetByID)
+
+	protectedDiscountRule := discountRule.Group("")
+	protectedDiscountRule.Use(handlers.AuthMW.Authenticate)
+
+	adminDiscountRule := protectedDiscountRule.Group("")
+	adminDiscountRule.Use(middleware.RequireRole("admin"))
+	adminDiscountRule.POST("", handlers.DiscountRule.Create)
+	adminDiscountRule.PUT("/:id", handlers.DiscountRule.Update)
+	adminDiscountRule.DELETE("/:id", handlers.DiscountRule.Delete)
 }
