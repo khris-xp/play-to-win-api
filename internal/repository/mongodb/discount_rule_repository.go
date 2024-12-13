@@ -47,7 +47,7 @@ func (r *discountRuleRepository) FindAll(ctx context.Context) ([]domain.Discount
 	pipeline := []bson.M{
 		{
 			"$lookup": bson.M{
-				"from":         "campaigns", // The collection to join with
+				"from":         "campaigns",
 				"localField":   "campaign_id",
 				"foreignField": "_id",
 				"as":           "campaign",

@@ -105,8 +105,8 @@ func (uc *appliedDiscountUseCase) CalculatePointsDiscount(ctx context.Context, c
 	}
 
 	totalPrice := calculateTotalPrice(cartItems)
-	maxDiscount := totalPrice * 0.20 // 20% cap
-	pointValue := float64(points)    // 1 point = 1 THB
+	maxDiscount := totalPrice * 0.20
+	pointValue := float64(points) 
 	discount := math.Min(pointValue, maxDiscount)
 	return math.Max(0, totalPrice-discount), nil
 }
@@ -124,7 +124,7 @@ func (uc *appliedDiscountUseCase) CalculateSpecialDiscount(ctx context.Context, 
 
 	totalPrice := calculateTotalPrice(cartItems)
 	if totalPrice < threshold {
-		return totalPrice, nil // Return original price if below threshold
+		return totalPrice, nil
 	}
 
 	discountTimes := math.Floor(totalPrice / threshold)
