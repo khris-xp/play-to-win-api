@@ -52,6 +52,7 @@ func main() {
 	campaignUseCase := usecase.NewCampaignUseCase(campaignRepo)
 	cartUseCase := usecase.NewCartUseCase(cartRepo)
 	cartItemUseCase := usecase.NewCartItemUseCase(cartItemRepo)
+	appliedDiscountUseCase := usecase.NewAppliedDiscountUseCase()
 
 	e := echo.New()
 
@@ -67,6 +68,7 @@ func main() {
 		Campaign: handler.NewCampaignHandler(campaignUseCase),
 		Cart:     handler.NewCartHandler(cartUseCase, authUseCase),
 		CartItem: handler.NewCartItemHandler(cartItemUseCase),
+		Discount: handler.NewDiscountHandler(cartItemUseCase, appliedDiscountUseCase),
 	}
 
 	route.SetupRoutes(e, handlers)

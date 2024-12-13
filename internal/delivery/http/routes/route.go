@@ -97,4 +97,12 @@ func SetupRoutes(e *echo.Echo, handlers *handler.Handlers) {
 	adminDiscountRule.POST("", handlers.DiscountRule.Create)
 	adminDiscountRule.PUT("/:id", handlers.DiscountRule.Update)
 	adminDiscountRule.DELETE("/:id", handlers.DiscountRule.Delete)
+
+	discounts := v1.Group("/discounts")
+
+	discounts.GET("/fixed-amount/:cart_id", handlers.Discount.CalculateFixedAmount)
+	discounts.GET("/percentage/:cart_id", handlers.Discount.CalculatePercentage)
+	discounts.GET("/category/:cart_id", handlers.Discount.CalculateCategoryDiscount)
+	discounts.GET("/points/:cart_id", handlers.Discount.CalculatePointsDiscount)
+	discounts.GET("/special/:cart_id", handlers.Discount.CalculateSpecialDiscount)
 }

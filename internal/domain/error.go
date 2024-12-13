@@ -39,4 +39,11 @@ var (
 
 	ErrInvalidDiscountRuleID = errors.New("invalid discount rule ID")
 	ErrDiscountRuleNotFound  = errors.New("discount rule not found")
+
+	ErrEmptyCart                 = errors.New("cart is empty")
+	ErrInvalidDiscountAmount     = errors.New("discount amount must be greater than 0")
+	ErrInvalidDiscountPercentage = errors.New("discount percentage must be between 0 and 100")
+	ErrInvalidCategory           = errors.New("category cannot be empty")
+	ErrInvalidPoints             = errors.New("points must be greater than 0")
+	ErrInvalidThreshold          = errors.New("threshold amount must be greater than 0")
 )
